@@ -8,11 +8,11 @@ type Variable struct {
 }
 
 func (variable *Variable) ToToken() string {
-	return fmt.Sprintf("var %s {}\n", variable.Name)
+	return fmt.Sprintf("var \"%s\" {}\n", variable.Name)
 }
 
 func (variable *Variable) ToVariable() string{
-	return fmt.Sprintf("%s = %s\n", variable.Name, variable.Value)
+	return fmt.Sprintf("%s = \"%s\"\n", variable.Name, variable.Value)
 }
 
 func (variable *Variable) ToReference() string {

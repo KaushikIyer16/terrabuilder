@@ -3,7 +3,7 @@ package components
 type Plan struct {
 	variables map[string]Variable
 	providers map[string]Provider
-	resources map[string][]Resource
+	resources map[string]map[string]Resource
 }
 
 func (plan *Plan) AddProvider(provider *Provider) *Plan {
@@ -18,7 +18,15 @@ func (plan *Plan) AddVariable(variable Variable) *Plan {
 }
 
 func (plan *Plan) AddResource(provider *Provider, resource *Resource) *Plan {
-	plan.resources[provider.name] = append(plan.resources[provider.name], *resource)
+	if plan.resources[provider.name] == nil {
+		plan.resources[provider.name] = map[string]Resource{}
+	}
+	plan.resources[provider.name][resource.Name] = *resource
+	return plan
+}
+
+func (plan *Plan) DeleteResource(providerName, resourceName string) *Plan {
+	delete(plan.resources[providerName], resourceName)
 	return plan
 }
 
@@ -42,5 +50,5 @@ func (plan *Plan) ToToken() string {
 }
 
 func NewPlan() *Plan {
-	return &Plan{resources: map[string][]Resource{}, providers: map[string]Provider{}, variables: map[string]Variable{}}
+	return &Plan{resources: map[string]map[string]Resource{}, providers: map[string]Provider{}, variables: map[string]Variable{}}
 }

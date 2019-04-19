@@ -3,15 +3,15 @@ package components
 import "fmt"
 
 type SimpleToken struct {
-	name string
-	value string
+	Name  string
+	Value string
 }
 
 func (simpleToken *SimpleToken) ToToken() string {
-	return fmt.Sprintf("%s = \"%s\"\n", simpleToken.name, simpleToken.value)
+	return fmt.Sprintf("%s = \"%s\"\n", simpleToken.Name, simpleToken.Value)
 }
 
-func NewSimpleToken(name, value string) SimpleToken {
-	return SimpleToken{name:name, value:value}
+func NewSimpleToken(name, value string) *SimpleToken {
+	return &SimpleToken{Name: name, Value:value}
 }
 

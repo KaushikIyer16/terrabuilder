@@ -5,8 +5,8 @@ import (
 )
 
 type Provider struct {
-	name string
-	token []SimpleToken
+	Name  string
+	Token []*SimpleToken
 }
 
 func (provider *Provider) ToToken() string {
@@ -14,23 +14,23 @@ func (provider *Provider) ToToken() string {
 }
 
 func (provider *Provider) Add(name, value string) *Provider {
-	provider.token = append(provider.token, NewSimpleToken(name, value))
+	provider.Token = append(provider.Token, NewSimpleToken(name, value))
 	return provider
 }
 
 func (provider *Provider) AddVariable(name string,variable Variable) *Provider {
-	provider.token = append(provider.token, NewSimpleToken(name, variable.ToReference()))
+	provider.Token = append(provider.Token, NewSimpleToken(name, variable.ToReference()))
 	return provider
 }
 
 func NewProvider(name string) *Provider {
-	return &Provider{name:name, token: []SimpleToken{}}
+	return &Provider{Name: name, Token: []*SimpleToken{}}
 }
 
 func (provider *Provider) ToProvider() string{
-	instance := fmt.Sprintf("provider \"%s\" {\n", provider.name)
+	instance := fmt.Sprintf("provider \"%s\" {\n", provider.Name)
 	/* iterate through the map and insert them */
-	for _, token := range provider.token  {
+	for _, token := range provider.Token {
 		tokenString := token.ToToken()
 		instance += fmt.Sprintf("%*s", len(tokenString)+2, tokenString)
 	}

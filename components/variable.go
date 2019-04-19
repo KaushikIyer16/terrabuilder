@@ -8,7 +8,7 @@ type Variable struct {
 }
 
 func (variable *Variable) ToToken() string {
-	return fmt.Sprintf("var \"%s\" {}\n", variable.Name)
+	return fmt.Sprintf("variable \"%s\" {}\n", variable.Name)
 }
 
 func (variable *Variable) ToVariable() string{

@@ -3,20 +3,20 @@ package components
 import "fmt"
 
 type CompoundToken struct {
-	name string
-	simple   []SimpleToken
-	compound []*CompoundToken
+	Name     string
+	Simple   []*SimpleToken
+	Compound []*CompoundToken
 }
 
 func (token *CompoundToken) ToToken(parentTabs int) string {
-	instance := fmt.Sprintf("%*s {\n", len(token.name)+parentTabs, token.name)
-	/* loop through the simple tokens*/
-	for _, simpleToken := range token.simple {
+	instance := fmt.Sprintf("%*s {\n", len(token.Name)+parentTabs, token.Name)
+	/* loop through the Simple tokens*/
+	for _, simpleToken := range token.Simple {
 		tokenString := simpleToken.ToToken()
 		instance += fmt.Sprintf("%*s", len(tokenString)+2+parentTabs, tokenString)
 	}
-	/* loop through the compound tokens */
-	for _, compoundToken := range token.compound {
+	/* loop through the Compound tokens */
+	for _, compoundToken := range token.Compound {
 		instance += compoundToken.ToToken(parentTabs+2)
 	}
 	instance += fmt.Sprintf("%*s\n", parentTabs+1, "}")
@@ -24,15 +24,15 @@ func (token *CompoundToken) ToToken(parentTabs int) string {
 }
 
 func (token *CompoundToken) Add(name, value string) *CompoundToken {
-	token.simple = append(token.simple, NewSimpleToken(name, value))
+	token.Simple = append(token.Simple, NewSimpleToken(name, value))
 	return token
 }
 
 func (token *CompoundToken) AddCompound(compoundToken *CompoundToken) *CompoundToken {
-	 token.compound = append(token.compound, compoundToken)
+	 token.Compound = append(token.Compound, compoundToken)
 	 return token
 }
 
 func NewCompoundToken(name string) *CompoundToken {
-	return &CompoundToken{name: name}
+	return &CompoundToken{Name: name}
 }

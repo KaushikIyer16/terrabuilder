@@ -8,6 +8,9 @@ type SimpleToken struct {
 }
 
 func (simpleToken *SimpleToken) ToToken() string {
+	if string(simpleToken.Value[0]) == "["{
+		return fmt.Sprintf("%s = %s\n", simpleToken.Name, simpleToken.Value)
+	}
 	return fmt.Sprintf("%s = \"%s\"\n", simpleToken.Name, simpleToken.Value)
 }
 

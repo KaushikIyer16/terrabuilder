@@ -18,6 +18,10 @@ func (resource *Resource) AddCompound(token *CompoundToken) *Resource {
 	return resource
 }
 
+func (resource *Resource) ToReference(name string) string {
+	return fmt.Sprintf("${%s.%s.%s}", resource.Type, resource.Name, name)
+}
+
 func (resource *Resource) AddSimple(name, value string) *Resource {
 	resource.Simple = append(resource.Simple, *NewSimpleToken(name, value))
 	return resource
